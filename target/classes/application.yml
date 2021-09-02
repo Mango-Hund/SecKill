@@ -1,0 +1,69 @@
+server:
+  port: 8080
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false #关闭缓存
+    enabled: true
+    encoding: UTF-8
+    mode: HTML5
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8 #最大连接数 默认是8
+        max-wait: 10000ms #最大连接阻塞时间，默认-1
+        max-idle: 200 #最大空闲连接，默认8
+        min-idle: 5 #最小空闲连接，默认0
+  rabbitmq:
+    host: 127.0.0.1 #服务器ip
+    username: guest
+    password: guest
+    virtual-host: /
+    port: 5672  #端口
+    listener:
+      simple:
+        concurrency: 10  #消费者最小数量
+        max-concurrency: 10 #消费者最大数量
+        prefetch: 1 #限制消费者每次只处理一条消息，处理完再继续处理吓一条消息
+        auto-startup: true #启动时是否默认启动容器
+        default-requeue-rejected: true #被拒绝时重新进入队列
+    template:
+      retry:
+        enabled: true #发布重试
+        initial-interval: 1000ms #重试时间
+        max-attempts: 3 #重试最大次数
+        max-interval: 10000ms #重试最大间隔时间，默认10000ms
+        multiplier: 1 #重试的间隔乘数，比如配2.0，第一次等10秒，第二次等20s，第三次等40s
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 37142408
+    hikari:
+      pool-name: DateHiKariCP #连接池名
+      minimum-idle: 5 #最小空闲连接数
+      idle-timeout: 1800000 #空闲连接最大连接时间（默认10分钟）
+      maximum-pool-size: 10 #从连接池返回的连接自动提交
+      auto-commit: true #从连接池返回的连接自动提交
+      max-lifetime: 1800000 #连接最大存活时间，默认30分钟
+      connection-timeout: 30000 #连接超时时间
+      connection-test-query: SELECT 1
+
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml  #配置mapper.xml映射文件
+  type-aliases-package: com.mango.seckill.pojo  #配置MyBatis数据返回类型的别名（默认别名是类名）
+
+logging:
+  level:
+    com.mango.seckill.mapper: debug
+    org.mybatis: debug
+    com.ibatis: debug
+    com.alibaba.druid: debug
+
+
