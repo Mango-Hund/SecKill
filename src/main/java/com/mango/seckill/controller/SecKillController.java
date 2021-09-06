@@ -84,7 +84,7 @@ public class SecKillController implements InitializingBean {
             //内存标记
             boolean over = localOverMap.get(goodsId);
             if(over) {
-            return RespBean.error(RespBeanEnum.SELL_OUT);
+                return RespBean.error(RespBeanEnum.SELL_OUT);
             }
             //预减库存
             long stock = redisTemplate.opsForValue().decrement("seckillGoodsStock"+goodsId);

@@ -41,6 +41,13 @@ public class GoodsController {
     private final ThymeleafViewResolver thymeleafViewResolver;
     private final ApplicationContext applicationContext;
 
+    /**
+     * @param model
+     * @param seckillUser
+     * @param response
+     * @param request
+     * @return 商品列表页
+     */
     @RequestMapping(value = "/toList",produces = "text/html;charset=utf-8")
     @ResponseBody
     public String toGoodsList(Model model, SeckillUser seckillUser,HttpServletResponse response,HttpServletRequest request){
@@ -63,6 +70,11 @@ public class GoodsController {
         return html;
     }
 
+    /**
+     * @param user
+     * @param goodsId
+     * @return 商品详情页
+     */
     @RequestMapping("/to_detail/{goodsId}")
     @ResponseBody
     public RespBean detail(SeckillUser user, @PathVariable("goodsId") long goodsId) {
